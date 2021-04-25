@@ -2,7 +2,8 @@
 import re
 import json
 
-data_f = '/home/vishal_pathak_quantiphi_com/coleridge_data/'
+data_f = '/home/vishal_pathak_quantiphi_com/notebooks/coleridge_data/'
+
 
 def clean_text(txt):
     return re.sub('[^A-Za-z0-9]+', ' ', str(txt).lower())
