@@ -1,8 +1,21 @@
 
 import re
 import json
+import pickle as pkl
 
 data_f = '/home/vishal_pathak_quantiphi_com/notebooks/coleridge_data/'
+
+def json_save(obj, path):
+    with open(path, 'w') as f:
+        json.dump(obj, f)
+    
+def read_pkl(path):
+    with open(path, 'rb') as f:
+        return pkl.load(f)
+    
+def pkl_save(obj, path):
+    with open(path, 'wb') as f:
+        pkl.dump(obj, f)
 
 
 def clean_text(txt):

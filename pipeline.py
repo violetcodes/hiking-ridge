@@ -17,12 +17,13 @@ batch_size = 4
 
 tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
 ner_tags = dict(O=0, B=1, I=2)
-r_ner_tags = dict(0=O, 1=B, 2=I)
+r_ner_tags = {j: i for i, j in ner_tags.items()}
 metric = load_metric('seqeval')
 
 def tokenize_and_align(examples):
     tokenized_inputs = tokenizer(
         examples['tokens'], padding='max_length',
+        max_length=1500,
         is_split_into_words=True
     )
 
@@ -33,7 +34,7 @@ def tokenize_and_align(examples):
         for word_idx in word_ids:
             if word_idx is None:
                 label_ids.append(-100)
-            else: label_ids.append(label[word_idx])
+            else: label_ids.append(ner_tags[label[word_idx]])
 
         labels.append(label_ids)
     
@@ -41,10 +42,10 @@ def tokenize_and_align(examples):
     return tokenized_inputs
 
 def read_prepared_data(path):
-    tagged_data = utils.read_json(path)
+    tagged_data = utils.read_pkl(path)
     mapping = dict(
         id=[i['id'] for i in tagged_data],
-        tokens = [i['tokens'] for i in tagged_data]
+        tokens = [i['tokens'] for i in tagged_data],
         ner_tags = [i['tags'] for i in tagged_data]
     )
     data = Dataset.from_dict(mapping=mapping)
