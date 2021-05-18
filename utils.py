@@ -1,9 +1,9 @@
-
 import re
 import json
 import pickle as pkl
 
-data_f = '/home/vishal_pathak_quantiphi_com/notebooks/coleridge_data/'
+# data_f = '/home/vishal_pathak_quantiphi_com/notebooks/coleridge_data/'
+data_f = '/kaggle/input/coleridgeinitiative-show-us-the-data/'
 
 def json_save(obj, path):
     with open(path, 'w') as f:
