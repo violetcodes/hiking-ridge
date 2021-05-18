@@ -9,8 +9,6 @@ from datasets import Dataset, load_metric
 
 from sklearn.model_selection import train_test_split
 
-
-
 task = 'ner'
 model_checkpoint = 'distilbert-base-uncased'
 batch_size = 4
@@ -23,7 +21,7 @@ metric = load_metric('seqeval')
 def tokenize_and_align(examples):
     tokenized_inputs = tokenizer(
         examples['tokens'], padding='max_length',
-        max_length=1500,
+        max_length=512, truncation=True,
         is_split_into_words=True
     )
 
