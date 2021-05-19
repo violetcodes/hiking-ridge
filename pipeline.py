@@ -29,8 +29,7 @@ def tokenize_and_align(examples):
         examples['tokens'], padding='max_length',
         max_length=512, truncation=True,
         is_split_into_words=True,
-        return_tensors='pt'
-    ).to(device)
+    )
 
 
     labels = []
@@ -44,7 +43,7 @@ def tokenize_and_align(examples):
 
         labels.append(label_ids)
     
-    tokenized_inputs['labels'] = labels
+    tokenized_inputs['labels'] = labels.to(device)
     return tokenized_inputs
 
 def read_prepared_data(path):
