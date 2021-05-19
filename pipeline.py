@@ -59,11 +59,11 @@ def read_prepared_data(path):
 def compute_metrics(p):
     predictions, lables = p
     true_predictions = [
-        r_ner_tags[p] for (p, l) in zip(prediction, label) if l!=-100
+        [r_ner_tags[p] for (p, l) in zip(prediction, label) if l!=-100]
         for prediction, label in zip(predictions, labels)
     ]
     true_labels = [
-        r_ner_tags[l] for (p, l) in zip(prediction, label) if l!=-100
+        [r_ner_tags[l] for (p, l) in zip(prediction, label) if l!=-100]
         for prediction, label in zip(predictions, labels)
     ]
     results = metric.compute(predictions=true_predictions, references=true_labels)
