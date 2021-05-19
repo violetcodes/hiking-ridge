@@ -6,6 +6,7 @@ from transformers import (
     AutoModelForTokenClassification,
     TrainingArguments, Trainer, DataCollatorForTokenClassification)
 from datasets import Dataset, load_metric
+import numpy as np
 
 from sklearn.model_selection import train_test_split
 
@@ -59,7 +60,7 @@ def read_prepared_data(path):
 def compute_metrics(p):
     predictions, labels = p
     predictions = np.argmax(predictions, axis=2)
-    
+
     true_predictions = [
         [r_ner_tags[p] for (p, l) in zip(prediction, label) if l!=-100]
         for prediction, label in zip(predictions, labels)
