@@ -13,7 +13,7 @@ task = 'ner'
 model_checkpoint = 'distilbert-base-uncased'
 batch_size = 16
 use_gpu = True
-device = 'gpu' if use_gpu else 'cpu'
+device = 'cuda' if use_gpu else 'cpu'
 
 tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
 
