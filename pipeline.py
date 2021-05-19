@@ -11,7 +11,9 @@ from sklearn.model_selection import train_test_split
 
 task = 'ner'
 model_checkpoint = 'distilbert-base-uncased'
-batch_size = 4
+batch_size = 16
+use_gpu = True
+device = 'gpu' if use_gpu else 'cpu'
 
 tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
 
@@ -20,14 +22,16 @@ r_ner_tags = {j: i for i, j in ner_tags.items()}
 metric = load_metric('seqeval')
 
 model = AutoModelForTokenClassification.from_pretrained(
-        model_checkpoint, num_labels=len(ner_tags))
+        model_checkpoint, num_labels=len(ner_tags)).to(device)
 
 def tokenize_and_align(examples):
     tokenized_inputs = tokenizer(
         examples['tokens'], padding='max_length',
         max_length=512, truncation=True,
-        is_split_into_words=True
-    )
+        is_split_into_words=True,
+        return_tensors='pt'
+    ).to(device)
+
 
     labels = []
     for i, label in enumerate(examples['ner_tags']):
@@ -74,7 +78,7 @@ def compute_metrics(p):
 
 def get_trainer(train_data, eval_data, model=None):
     model = model or AutoModelForTokenClassification.from_pretrained(
-        model_checkpoint, num_labels=len(ner_tags))
+        model_checkpoint, num_labels=len(ner_tags)).to(device)
     
     args = TrainingArguments(
         'train-ner',
