@@ -3,7 +3,8 @@ import json
 import pickle as pkl
 
 # data_f = '/home/vishal_pathak_quantiphi_com/notebooks/coleridge_data/'
-data_f = '/kaggle/input/coleridgeinitiative-show-us-the-data/'
+# data_f = '/kaggle/input/coleridgeinitiative-show-us-the-data/'
+data_f = '/content/drive/MyDrive/work/coleridge/data/'
 
 def json_save(obj, path):
     with open(path, 'w') as f:
@@ -29,6 +30,7 @@ def read_json(path):
 def get_json(uid, split='train'):
     filepath = data_f + split + '/' + uid + '.json'
     return read_json(filepath)
+
     
 json_text = lambda jload: '\n\n\t'.join([i['section_title'] + ': ' + i['text'] for i in jload])
 

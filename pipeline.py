@@ -14,9 +14,13 @@ model_checkpoint = 'distilbert-base-uncased'
 batch_size = 4
 
 tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+
 ner_tags = dict(O=0, B=1, I=2)
 r_ner_tags = {j: i for i, j in ner_tags.items()}
 metric = load_metric('seqeval')
+
+model = AutoModelForTokenClassification.from_pretrained(
+        model_checkpoint, num_labels=len(ner_tags))
 
 def tokenize_and_align(examples):
     tokenized_inputs = tokenizer(
@@ -68,7 +72,7 @@ def compute_metrics(p):
     )
 
 
-def get_trainer(train_data, eval_data):
+def get_trainer(train_data, eval_data, model=None):
     model = model or AutoModelForTokenClassification.from_pretrained(
         model_checkpoint, num_labels=len(ner_tags))
     
