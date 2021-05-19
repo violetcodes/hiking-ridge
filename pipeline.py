@@ -43,7 +43,7 @@ def tokenize_and_align(examples):
 
         labels.append(label_ids)
     
-    tokenized_inputs['labels'] = labels.to(device)
+    tokenized_inputs['labels'] = labels
     return tokenized_inputs
 
 def read_prepared_data(path):
