@@ -11,7 +11,7 @@ from sklearn.model_selection import train_test_split
 
 task = 'ner'
 model_checkpoint = 'distilbert-base-uncased'
-batch_size = 16
+batch_size = 32
 use_gpu = True
 device = 'cuda' if use_gpu else 'cpu'
 
@@ -57,7 +57,7 @@ def read_prepared_data(path):
     return data.map(tokenize_and_align, batched=True)
 
 def compute_metrics(p):
-    predictions, lables = p
+    predictions, labels = p
     true_predictions = [
         [r_ner_tags[p] for (p, l) in zip(prediction, label) if l!=-100]
         for prediction, label in zip(predictions, labels)
