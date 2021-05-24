@@ -16,14 +16,14 @@ batch_size = 32
 use_gpu = True
 device = 'cuda' if use_gpu else 'cpu'
 
-tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
+# tokenizer = AutoTokenizer.from_pretrained(model_checkpoint)
 
 ner_tags = dict(O=0, B=1, I=2)
 r_ner_tags = {j: i for i, j in ner_tags.items()}
 metric = load_metric('seqeval')
 
-model = AutoModelForTokenClassification.from_pretrained(
-        model_checkpoint, num_labels=len(ner_tags)).to(device)
+# model = AutoModelForTokenClassification.from_pretrained(
+#         model_checkpoint, num_labels=len(ner_tags)).to(device)
 
 def tokenize_and_align(examples):
     tokenized_inputs = tokenizer(
@@ -78,10 +78,11 @@ def compute_metrics(p):
     )
 
 
-def get_trainer(train_data, eval_data, model=None):
+def get_trainer(train_data, eval_data, model=None, tokenizer=None):
     model = model or AutoModelForTokenClassification.from_pretrained(
         model_checkpoint, num_labels=len(ner_tags)).to(device)
-    
+    tokenizer = tokenizer or None
+
     args = TrainingArguments(
         'train-ner',
         evaluation_strategy = 'epoch',
