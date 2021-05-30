@@ -18,7 +18,7 @@ class Preprocess:
     '''data annotation class'''
     def __init__(self, df, split='train'):
         self.df = df
-        self.fileids = self.df.Id.unique().values.tolist()
+        self.fileids = self.df.Id.unique().tolist()
         self.split = split 
         self.files = {}
         self.cleanfiles = {}
