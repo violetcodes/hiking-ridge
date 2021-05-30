@@ -37,7 +37,7 @@ class Preprocess:
     def process(self):
         '''gives iterator for processed files'''
         for fileid in self.fileids:
-            self.files[fileid] = jsonfile = readfile(i)
+            self.files[fileid] = jsonfile = readfile(fileid)
             self.cleanfiles[fileid] = clean_text = cleaned_text_fromjson(jsonfile)
 
             labels = keep_longest_labels(
