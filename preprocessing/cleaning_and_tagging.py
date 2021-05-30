@@ -1,6 +1,6 @@
 import pandas as pd 
-from .. import config as cfg 
-from .. import utils
+import ..config as cfg 
+import ..utils
 from collections import defaultdict
 from tagging_utils import *
 import time, os, re
