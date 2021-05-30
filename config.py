@@ -21,7 +21,7 @@ test_folder = f'{datafolder}test/'
 
 # prepare data
 labelcols = ['dataset_title', 'dataset_label', 'cleaned_label']
-ner_tagmap = dict(0='O', 1='B', 2='I')
+ner_tagmap = {0:'O', 1:'B', 2:'I'}
 
 
 
