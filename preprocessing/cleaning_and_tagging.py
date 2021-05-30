@@ -24,10 +24,11 @@ class Preprocess:
         self.cleanfiles = {}
         self.tagmap = cfg.ner_tagmap
         self.processed_data = []
+        self.getlabelmap()
     
     def getlabelmap(self):
         df = self.df
-        self.cols = cols = cfg.labelcolumns        
+        self.cols = cols = cfg.labelcols        
         label_map = defaultdict(set)
         for fileid in self.fileids:
             for j1 in df[df.Id == fileid][cols].values:
