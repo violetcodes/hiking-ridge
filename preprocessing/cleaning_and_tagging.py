@@ -11,7 +11,7 @@ def readfile(fileid, split='train'):
     return utils.read_json(filepath)
 
 def cleaned_text_fromjson(json_file):
-    return [utils.clean_text(i['section_title'] + ': ' + i['text']) for i in jload]
+    return [utils.clean_text(i['section_title'] + ': ' + i['text']) for i in json_file]
 
 
 class Preprocess:
