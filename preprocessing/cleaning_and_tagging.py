@@ -6,7 +6,7 @@ from preprocessing.tagging_utils import *
 import time, os, re
 
 def readfile(fileid, split='train'):
-    folder = cfg.train_datafolder if split=='train' else cfg.test_datafolder
+    folder = cfg.train_folder if split=='train' else cfg.test_folder
     filepath = f'{folder}{fileid}.json' 
     return utils.read_json(filepath)
 
