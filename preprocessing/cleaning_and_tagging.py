@@ -55,7 +55,7 @@ class Preprocess:
                     labels=found_labels,
                     tokens=tokens,
                     tags=tags,
-                    indx=inx
+                    indx=inx,
                     has_tags=(1 in tags or 2 in tags)
                 )
                 self.processed_data.append(s)
@@ -63,7 +63,6 @@ class Preprocess:
 
     def save_as_json(self, savedir=None, name=''):
         savedir = savedir or cfg.preprocessedfolder
-        
         init_dict = dict(
             df=self.df.to_dict(),
             fileids=self.fileids,
