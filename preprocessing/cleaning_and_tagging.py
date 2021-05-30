@@ -2,7 +2,7 @@ import pandas as pd
 import config as cfg
 import utils
 from collections import defaultdict
-from tagging_utils import *
+from preprocessing.tagging_utils import *
 import time, os, re
 
 def readfile(fileid, split='train'):
