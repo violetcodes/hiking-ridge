@@ -31,7 +31,7 @@ class Preprocess:
         self.cols = cols = cfg.labelcols        
         label_map = defaultdict(set)
         for fileid in self.fileids:
-            label_map = {
+            label_map[fileid] = {
                 j1 for j in df[df.Id==fileid][cols].values
                 for j1 in j
             }
