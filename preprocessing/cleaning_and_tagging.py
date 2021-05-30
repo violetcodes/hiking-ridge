@@ -41,7 +41,7 @@ class Preprocess:
             self.cleanfiles[fileid] = clean_text = cleaned_text_fromjson(jsonfile)
 
             labels = keep_longest_labels(
-                [utils.clean_text(i) for i in self.labels_map[fileid]])
+                [utils.clean_text(i) for i in self.label_map[fileid]])
             for i, cltx in enumerate(clean_text):
                 idx_with_labels = findindex(cltx, labels)
                 idx = [i for i, j in idx_with_labels]
