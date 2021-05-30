@@ -32,6 +32,7 @@ class Preprocess:
         label_map = defaultdict(set)
         for fileid in self.fileids:
             for j1 in df[df.Id == fileid][cols].values.tolist():
+                print(j1)
                 label_map[fileid].add(j1)
         self.label_map = label_map        
     
