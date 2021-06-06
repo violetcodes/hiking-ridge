@@ -17,8 +17,7 @@ def get_file_names_and_labels(df, label_columns=None, fileid_col='Id'):
         dict(
             fileid=fileid,
             labels=labels_proc(
-                df.loc[df[fileid_col]==fileid, label_columns].
-                values.flatten().tolist())
+                df.loc[df[fileid_col]==fileid, label_columns].values.flatten().tolist())
         ) for fileid in fileids]    
     return file_name_and_labels
 
