@@ -6,7 +6,7 @@ def json_save(obj, path):
     with open(path, 'w') as f:
         json.dump(obj, f)
     
-def read_pkl(path):
+def pkl_load(path):
     with open(path, 'rb') as f:
         return pkl.load(f)
     
@@ -17,6 +17,11 @@ def pkl_save(obj, path):
 def clean_text(txt):
     return re.sub('[^A-Za-z0-9]+', ' ', str(txt).lower())
 
-def read_json(path):
+def findindex(text, subtexts):
+    return [
+        (m.start(), m.end()) for subtext in subtexts
+        for m in re.finditer(subtext, text)]
+
+def json_load(path):
     with open(path, 'r') as f:
         return json.load(f)
