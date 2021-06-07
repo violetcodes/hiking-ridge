@@ -33,15 +33,15 @@ def readfile(fileid, split='train'):
     filepath = f'{folder}{fileid}.json' 
     return utils.json_load(filepath)
 
-def clean_file(json_file):
-    return [utils.clean_text(i['section_title'] + ': ' + i['text']) for i in json_file]
+def text_file(json_file):
+    return [(i['section_title'] + ': ' + i['text']) for i in json_file]
 
 def file_loaded_and_label(fileid_list, split='train'):
     '''lazy implementation'''
     for file_dict in fileid_list:        
         filejson = readfile(file_dict['fileid'], split=split)
-        cleaned_file = clean_file(filejson)
-        file_dict.update(dict(file_text_list=cleaned_file))
+        texts = text_file(filejson)
+        file_dict.update(dict(file_text_list=texts))
         yield file_dict
 
 def finelabel(filedict):
@@ -60,11 +60,11 @@ def finelabel(filedict):
     labelspool = filedict['labels'] # or all labels
     tagged = []        
     for text in textlist:
+        text = utils.clean_text(text)
         labels_detected = []
         for label in labelspool:
             indexes = utils.findindex(text, label)
-            if indexes:
-                labels_detected.extend([dict(start=i[0], end=i[1], label=label) for i in indexes])        
+            labels_detected.extend([dict(start=i[0], end=i[1], label=label) for i in indexes])        
         tagged.append(dict(text=text, labels=labels_detected, fileid=filedict.get('fileid', '')))
     return tagged
 
