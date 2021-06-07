@@ -3,11 +3,11 @@ import utils
 from tqdm.notebook import tqdm as tqdm_notebook
 from tqdm import tqdm as tqdm_console
 
-def tqdm(iterable):
+def tqdm(iterable, desc=''):
     try:
-        return tqdm_notebook(iterable)
+        return tqdm_notebook(iterable, desc=desc)
     except:
-        return tqdm_console(iterable)
+        return tqdm_console(iterable, desc=desc)
 
 if config.finelevel == 'sentence':
     import nltk
