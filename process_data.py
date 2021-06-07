@@ -9,7 +9,7 @@ if config.finelevel == 'sentence':
 
 def get_file_names_and_labels(df, label_columns=None, fileid_col='Id'):
     '''df containing labels and file name, extract them and json form'''    
-    label_columns = label_columns or cfg.label_columns_in_csv
+    label_columns = label_columns or config.label_columns_in_csv
     fileids = df[fileid_col].unique().tolist()
     labels_proc = lambda x: list({utils.clean_text(i) for i in x})
     
