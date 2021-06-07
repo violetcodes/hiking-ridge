@@ -1,5 +1,10 @@
 import config
 import utils
+import nltk
+# nltk.download('punkt')
+from nltk import sent_tokenize
+
+
 from tqdm.notebook import tqdm as tqdm_notebook
 from tqdm import tqdm as tqdm_console
 
@@ -8,11 +13,6 @@ def tqdm(iterable, desc='', total=None):
         return tqdm_notebook(iterable, desc=desc, total=total)
     except:
         return tqdm_console(iterable, desc=desc, total=total)
-
-if config.finelevel == 'sentence':
-    import nltk
-    nltk.download('punkt')
-    from nltk import sent_tokenize
 
 def get_file_names_and_labels(df, label_columns=None, fileid_col='Id'):
     '''df containing labels and file name, extract them and json form'''    
