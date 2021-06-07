@@ -45,7 +45,7 @@ def finelabel(filedict):
         texts = sent_tokenize(text)
         o, w, l = config.overlap, config.width, len(texts)
         textlist = [
-            ' '.join(texts[max(0, i-o):min(i+w, l])
+            ' '.join(texts[max(0, i-o):min(i+w, l)])
             for i in range(0, l, w)]
     else:
         textlist = file_text_list
