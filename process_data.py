@@ -40,7 +40,7 @@ def file_loaded_and_label(fileid_list, split='train'):
 def finelabel(filedict):
     '''must have file_text_list and labels'''
     file_text_list = filedict['file_text_list']
-    if finelevel = 'sentence':        
+    if config.finelevel == 'sentence':        
         text = ' '.join(file_text_list)
         texts = sent_tokenize(text)
         o, w, l = config.overlap, config.width, len(texts)
