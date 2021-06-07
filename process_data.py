@@ -61,10 +61,8 @@ def finelabel(filedict):
     tagged = []        
     for text in textlist:
         text = utils.clean_text(text)
-        labels_detected = []
-        for label in labelspool:
-            indexes = utils.findindex(text, label)
-            labels_detected.extend([dict(start=i[0], end=i[1], label=label) for i in indexes])        
+        indexes = utils.findindex(text, labelspool)
+        labels_detected = [dict(start=i[0], end=i[1], label=i[2]) for i in indexes]      
         tagged.append(dict(text=text, labels=labels_detected, fileid=filedict.get('fileid', '')))
     return tagged
 
