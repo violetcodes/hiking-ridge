@@ -18,7 +18,7 @@ def get_file_names_and_labels(df, label_columns=None, fileid_col='Id'):
             fileid=fileid,
             labels=labels_proc(
                 df.loc[df[fileid_col]==fileid, label_columns].values.flatten().tolist())
-        ) for fileid in fileids]    
+        ) for fileid in tqdm(fileids)]    
     return file_name_and_labels
 
 def readfile(fileid, split='train'):
@@ -31,7 +31,7 @@ def clean_file(json_file):
 
 def file_loaded_and_label(fileid_list, split='train'):
     '''lazy implementation'''
-    for file_dict in file_id_list:        
+    for file_dict in fileid_list:        
         filejson = readfile(file_dict['fileid'], split='split')
         cleaned_file = clean_file(filejson)
         file_dict.update(dict(file_text_list=cleaned_file))
