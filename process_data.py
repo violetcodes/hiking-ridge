@@ -1,6 +1,6 @@
 import config
 import utils
-from tqdm import tqdm
+from tqdm.notebook import tqdm
 
 if config.finelevel == 'sentence':
     import nltk
