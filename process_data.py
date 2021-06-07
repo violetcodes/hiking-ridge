@@ -39,7 +39,7 @@ def clean_file(json_file):
 def file_loaded_and_label(fileid_list, split='train'):
     '''lazy implementation'''
     for file_dict in fileid_list:        
-        filejson = readfile(file_dict['fileid'], split='split')
+        filejson = readfile(file_dict['fileid'], split=split)
         cleaned_file = clean_file(filejson)
         file_dict.update(dict(file_text_list=cleaned_file))
         yield file_dict
