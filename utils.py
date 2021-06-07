@@ -19,7 +19,7 @@ def clean_text(txt):
 
 def findindex(text, subtexts):
     return [
-        (m.start(), m.end()) for subtext in subtexts
+        (m.start(), m.end(), subtext) for subtext in subtexts
         for m in re.finditer(subtext, text)]
 
 def json_load(path):
