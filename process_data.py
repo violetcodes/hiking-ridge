@@ -3,11 +3,11 @@ import utils
 from tqdm.notebook import tqdm as tqdm_notebook
 from tqdm import tqdm as tqdm_console
 
-def tqdm(iterable, desc=''):
+def tqdm(iterable, desc='', total=None):
     try:
-        return tqdm_notebook(iterable, desc=desc)
+        return tqdm_notebook(iterable, desc=desc, total=total)
     except:
-        return tqdm_console(iterable, desc=desc)
+        return tqdm_console(iterable, desc=desc, total=total)
 
 if config.finelevel == 'sentence':
     import nltk
@@ -76,7 +76,8 @@ class CDataset:
         self.tagging()
     
     def filesload(self):
-        self.file_loaded = [i for i in tqdm(file_loaded_and_label(self.fileids),'loading...')]
+        total = len(self.fileids)
+        self.file_loaded = [i for i in tqdm(file_loaded_and_label(self.fileids),desc='loading...', total=total)]
     
     def tagging(self):
         self.tagged = [j for fdict in tqdm(self.file_loaded,'tagging...') for j in finelabel(fdict)]
