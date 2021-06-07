@@ -1,6 +1,13 @@
 import config
 import utils
-from tqdm.notebook import tqdm
+from tqdm.notebook import tqdm as tqdm_notebook
+from tqdm import tqdm as tqdm_console
+
+def tqdm(iterable):
+    try:
+        return tqdm_notebook(iterable)
+    except:
+        return tqdm_console(iterable)
 
 if config.finelevel == 'sentence':
     import nltk
@@ -24,7 +31,7 @@ def get_file_names_and_labels(df, label_columns=None, fileid_col='Id'):
 def readfile(fileid, split='train'):
     folder = config.train_folder if split=='train' else config.test_folder
     filepath = f'{folder}{fileid}.json' 
-    return utils.read_json(filepath)
+    return utils.json_load(filepath)
 
 def clean_file(json_file):
     return [utils.clean_text(i['section_title'] + ': ' + i['text']) for i in json_file]

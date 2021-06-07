@@ -10,7 +10,7 @@ outputfolder = f'{topfolder}output/'
 def create_subfolders():
     for folder in [datafolder, modelfolder, outputfolder, preprocessedfolder]:
         if not os.path.exists(folder): os.makedirs(folder)
-# create_subfolders()
+create_subfolders()
 
 train_csvpath = f'{datafolder}train.csv'
 test_csvpath = f'{datafolder}test.csv'
