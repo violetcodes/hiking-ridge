@@ -71,13 +71,25 @@ class CDataset:
         self.df = df
         self.fileids = get_file_names_and_labels(df)
         self.filesload()
-        self.tagging()
+        # self.tagging()
     
     def filesload(self):
         self.total = len(self.fileids)
         self.file_loaded = file_loaded_and_label(self.fileids)
         # self.file_loaded = [i for i in tqdm(file_loaded_and_label(self.fileids),desc='loading...', total=self.total)]
+    # def tagged(self):
+    #     for i in self.file_loaded:
+    #         for j in finelabel(i):
+    #             yield j
     
+    # def tagged_filtered(self):
+    #     for i in self.tagged():
+    #         if i['labels']: yield i 
+    
+    # def tagged_nolabels(self):
+    #     for i in self.tagged():
+    #         if not i['labels']: yield i
+
     def tagging(self):
         self.tagged = (j for fdict in self.file_loaded for j in finelabel(fdict))
         self.tagged_filtered = (i for i in self.tagged if i['labels'])
