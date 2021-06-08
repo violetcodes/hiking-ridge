@@ -75,12 +75,12 @@ class CDataset:
     
     def filesload(self):
         self.total = len(self.fileids)
-        self.file_loaded = (i for i in tqdm(file_loaded_and_label(self.fileids),desc='loading...', total=self.total))
+        self.file_loaded = [i for i in tqdm(file_loaded_and_label(self.fileids),desc='loading...', total=self.total)]
 
     def tagging(self):
-        self.tagged = (j for fdict in tqdm(self.file_loaded, 'tagging...') for j in finelabel(fdict))
-        self.tagged_filtered = (i for i in self.tagged if i['labels'])
-        self.tagged_nolabels = (i for i in self.tagged if not i['labels'])
+        self.tagged = [j for fdict in tqdm(self.file_loaded, 'tagging...') for j in finelabel(fdict)]
+        self.tagged_filtered = [i for i in self.tagged if i['labels']]
+        self.tagged_nolabels = [i for i in self.tagged if not i['labels']]
 
 def pickle_data(cdata, filename):
     utils.pkl_save(cdata, f'{config.preprocessedfolder}{filename}')
