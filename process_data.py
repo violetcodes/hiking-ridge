@@ -3,6 +3,7 @@ import utils
 import nltk
 # nltk.download('punkt')
 from nltk import sent_tokenize
+import time
 
 
 from tqdm.notebook import tqdm as tqdm_notebook
@@ -30,7 +31,7 @@ def get_file_names_and_labels(df, label_columns=None, fileid_col='Id'):
 
 def readfile(fileid, split='train'):
     folder = config.train_folder if split=='train' else config.test_folder
-    filepath = f'{folder}{fileid}.json' 
+    filepath = f'{folder}/{fileid}.json' 
     return utils.json_load(filepath)
 
 def text_file(json_file):
@@ -73,6 +74,23 @@ class CDataset:
         # self.filesload()
         # self.tagging()
     
+    def loading_and_tagging(self, storeat=None):
+        storeat = storeat or str(time.ctime())
+        self.storage_df = []
+        cols = ['location', 'is_empty_label']
+
+        for file in tqdm(self.fileids):
+            fdict = file_loaded_and_label(file)
+            for i, tagged in enumerate(finelabel(fdict)):
+                location = fdict['fileid'] + f'_{i}.json'
+                is_empty_label = False if tagged['labels'] else True
+                json_save_data(tagged, location, storeat)
+                self.storage_df.append([location, is_empty_label])
+        
+        import pandas as pd 
+        self.storage_df = pd.DataFrame(self.storage_df, columns=cols)
+        return self.storage_df        
+
     def filesload(self):
         self.total = len(self.fileids)
         self.file_loaded = [i for i in tqdm(file_loaded_and_label(self.fileids),desc='loading...', total=self.total)]
@@ -82,9 +100,19 @@ class CDataset:
         self.tagged_filtered = [i for i in self.tagged if i['labels']]
         self.tagged_nolabels = [i for i in self.tagged if not i['labels']]
 
-def pickle_data(cdata, filename):
-    utils.pkl_save(cdata, f'{config.preprocessedfolder}{filename}')
-    print(f'saved in {config.preprocessedfolder}{filename}')
+def pickle_data(cdata, filename, folder=None):
+    folder = f'{config.preprocessedfolder}/{folder}' if folder is not None else f'{config.preprocessedfolder}'
+    if not os.path.exits(folder):
+        os.mkdirs(folder)
+    utils.pkl_save(cdata, f'{folder}/{filename}')
+    # print(f'saved in {folder}/{filename}')
+
+def json_save_data(cdata, filename, folder=None):
+    folder = f'{config.preprocessedfolder}/{folder}' if folder is not None else f'{config.preprocessedfolder}'
+    if not os.path.exits(folder):
+        os.mkdirs(folder)
+    utils.json_save(cdata, f'{folder}/{filename}')
+    # print(f'saved in {folder}/{filename}')
 
 def load_data(filename):
     return utils.pkl_load(f'{config.preprocessedfolder}{filename}')
