@@ -84,7 +84,7 @@ class CDataset:
         self.tagged_nolabels = (i for i in self.tagged if not i['labels'])
 
 def pickle_data(cdata, filename):
-    pkl_save(cdata, f'{config.preprocessedfolder}{filename}')
+    utils.pkl_save(cdata, f'{config.preprocessedfolder}{filename}')
     print(f'saved in {config.preprocessedfolder}{filename}')
 
 def load_data(filename):
