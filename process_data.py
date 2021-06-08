@@ -90,3 +90,13 @@ def pickle_data(cdata, filename):
 def load_data(filename):
     return utils.pkl_load(f'{config.preprocessedfolder}{filename}')
     
+def highlight_tagged_data(tagged_instance):
+    char_list = list(tagged_instance['text'])
+    colors = ['white'] * len(char_list)
+    rotate_colors = ['blue', 'teal', 'yello', 'pink', 'red']
+    j = 0
+    for i in tagged_instance['labels']:
+        s, e = i['start'], i['end']
+        colors[s:e] = [rotate_colors[j]]*(e-s)
+        j += 1; j %= len(rotate_colors)
+    return utils.highlight_tokens(char_list, colors, joinby='')

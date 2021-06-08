@@ -25,3 +25,7 @@ def findindex(text, subtexts):
 def json_load(path):
     with open(path, 'r') as f:
         return json.load(f)
+
+def highlight_tokens(tokens, colors, joinby=''):
+    marker = '''<mark style="background-color: {}; color: #2E2E2E;">{}</mark>'''
+    return ''.join([marker.format(c, ent) for ent, c in zip(tokens, colors)])
