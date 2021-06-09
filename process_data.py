@@ -115,7 +115,7 @@ def json_save_data(cdata, filename, folder=None):
     # print(f'saved in {folder}/{filename}')
 
 def load_data(filename):
-    return utils.pkl_load(f'{config.preprocessedfolder}{filename}')
+    return utils.pkl_load(f'{config.preprocessedfolder}/{filename}')
     
 def highlight_tagged_data(tagged_instance):
     char_list = list(tagged_instance['text'])
