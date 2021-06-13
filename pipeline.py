@@ -5,7 +5,7 @@ def get_annotated_dataset(name, n=None):
         name: str = name of the file e.g. example.pkl
     Returns:
     '''
-    import config
+    import config, utils
     tagged = utils.json_load(config.preprocessed_data + '/' + name)
     # import process_data as proc
 
