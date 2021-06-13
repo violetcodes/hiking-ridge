@@ -13,7 +13,7 @@ def label_tokens(examples):
     '''
     texts = examples['text']
     start_end_offset = [
-        [[j['start'], j['end']] for j in i] for i in examples['labels']]
+        [[j['start'], j['end']] for j in i] for i in examples['labels_info']]
     max_len = config.seq_max_len
     tokenized_data = tokenizer(
         texts, max_length=max_len, truncation=True,
