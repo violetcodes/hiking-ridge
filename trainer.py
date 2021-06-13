@@ -8,13 +8,22 @@ from transformers import (
     TrainingArguments, Trainer,
     DataCollatorForTokenClassification)
 
-def label_tokens(examples):
+def get_tokenizer(name):
+    return AutoTokenizer.from_pretrained(name)
+def get_model(name, num_labels, device):
+    return AutoModelForTokenClassification.from_pretrained(name, num_labels=num_labels).to(device)
+
+
+
+def label_tokens(examples, tokenizer=None):
     '''tokenization for batch of data and NER labels for each token
     '''
     texts = examples['text']
     start_end_offset = [
         [[j['start'], j['end']] for j in i] for i in examples['labels_info']]
     max_len = config.seq_max_len
+    tokenizer = tokenizer or get_tokenizer(config.model_name)
+
     tokenized_data = tokenizer(
         texts, max_length=max_len, truncation=True,
         padding=True, return_offsets_mapping=True)
@@ -46,11 +55,12 @@ def get_mappings(fdata_tagged, feature_names=None):
     # TODO: Fix this later by mapping stored labels to labels_info and updating stored
     return mappings
 
-def get_dataset(fdata_tagged):
+def get_dataset(fdata_tagged, tokenizer=None):
     mappings = get_mappings(fdata_tagged)
     dataset = Dataset.from_dict(mapping=mappings)
-    dataset1 = dataset.map(label_tokens, batched=True)
-    return dataset1
+    tokenizer = tokenizer or get_tokenizer(config.model_name)
+    dataset1 = dataset.map(lambda x: label_tokens(x, tokenizer), batched=True)
+    return dataset1, tokenizer
 
 def compute_metrics(p):
     predictions, labels = p
@@ -79,9 +89,10 @@ def get_trainer(
     tr_args = Training arguments
     '''
     device = 'cuda' if config.use_gpu else 'cpu'
-    model = model or AutoModelForTokenClassification.from_pretrained(
-        config.model_name, num_labels=len(config.ner_tags)).to(device)
-    tokenizer = tokenizer or AutoTokenizer.from_pretrained(config.model_name)
+    tokenizer = tokenizer or get_tokenizer(config.model_name)
+    model = model or get_model(
+        config.model_name, num_labels=len(config.ner_tags), device=device)
+    
     
     training_args = config.training_args
     training_args.update(tr_args or {})
