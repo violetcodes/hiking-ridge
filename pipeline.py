@@ -5,10 +5,11 @@ def get_annotated_dataset(name, n=None):
         name: str = name of the file e.g. example.pkl
     Returns:
     '''
-    import process_data as proc
+    tagged = utils.json_load(config.preprocessed_data + '/' + name)
+    # import process_data as proc
 
-    Pdata = proc.load_data(name)
-    tagged = Pdata.tagged[:n]
+    # Pdata = proc.load_data(name)
+    tagged = tagged[:n]
     return tagged 
 
 def train(dataname, return_trainer=False):
