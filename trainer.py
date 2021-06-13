@@ -40,7 +40,7 @@ def get_mappings(fdata_tagged, feature_names=None):
     feature_names = feature_names or config.feature_names
     mappings = {}
     for i in feature_names:
-        mappings[i] = [j[i] for j in ftagged_data]
+        mappings[i] = [j[i] for j in fdata_tagged]
     mappings['labels_info'] = mappings['labels']
     del mappings['labels'] # going to store token labels in labels columns 
     # TODO: Fix this later by mapping stored labels to labels_info and updating stored
