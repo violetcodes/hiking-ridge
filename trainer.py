@@ -8,16 +8,6 @@ from transformers import (
     TrainingArguments, Trainer,
     DataCollatorForTokenClassification)
 
-def get_annotated_dataset(name, n=None):
-    '''load data from pickle
-    Args:
-        name: str = name of the file e.g. example.pkl
-    Returns:
-    '''
-    Pdata = proc.load_data(name)
-    tagged = Pdata.tagged[:n]
-    return tagged 
-
 def label_tokens(examples):
     '''tokenization for batch of data and NER labels for each token
     '''
@@ -50,7 +40,7 @@ def get_mappings(fdata_tagged, feature_names=None):
     feature_names = feature_names or config.feature_names
     mappings = {}
     for i in feature_names:
-        mappings[i] = [j[i] for j in tagged_data]
+        mappings[i] = [j[i] for j in ftagged_data]
     mappings['labels_info'] = mappings['labels']
     del mappings['labels'] # going to store token labels in labels columns 
     # TODO: Fix this later by mapping stored labels to labels_info and updating stored
@@ -111,6 +101,8 @@ def get_trainer(
         tokenizer=tokenizer,
         compute_metrics=compute_metrics
     )
+
+
     
 
 
