@@ -6,7 +6,7 @@ def get_annotated_dataset(name, n=None):
     Returns:
     '''
     import config, utils
-    tagged = utils.json_load(config.preprocessed_data + '/' + name)
+    tagged = utils.json_load(config.preprocessedfolder + '/' + name)
     # import process_data as proc
 
     # Pdata = proc.load_data(name)
