@@ -7,6 +7,7 @@ from transformers import (
     AutoModelForTokenClassification,
     TrainingArguments, Trainer,
     DataCollatorForTokenClassification)
+import numpy as np 
 
 def get_tokenizer(name):
     return AutoTokenizer.from_pretrained(name)
