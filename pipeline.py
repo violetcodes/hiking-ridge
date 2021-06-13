@@ -1,11 +1,10 @@
-
+import config, utils 
 def get_annotated_dataset(name, n=None):
     '''load data from pickle
     Args:
         name: str = name of the file e.g. example.pkl
     Returns:
     '''
-    import config, utils
     tagged = utils.json_load(config.preprocessedfolder + '/' + name)
     # import process_data as proc
 
@@ -33,7 +32,10 @@ def train(dataname, return_trainer=False):
     predictions = np.argmax(preds_prob, axis=2)
 
     metrics = trainer.compute_metrics((preds_prob, labels))
-    return tr, metrics, predictions
+    return dict(
+        trainer=tr, metrics=metrics, predictions=predictions,
+        train_data=train_data, eval_data=eval_data, 
+        processed_data=preocessed_data)
 
   
 
