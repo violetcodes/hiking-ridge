@@ -18,9 +18,11 @@ def train(dataname, return_trainer=False):
     import trainer 
 
     train_data, eval_data = train_test_split(processed_data, test_size=config.split_size)
+    tokenizer = trainer.get_tokenizer(config.model_name)
 
-    train_data, eval_data = list(map(trainer.get_dataset, [train_data, eval_data]))
-    tr = trainer.get_trainer(train_data, eval_data)
+    (train_data, _), (eval_data, _) = list(map(
+        lambda x: trainer.get_dataset(x, tokenizer=tokenizer), [train_data, eval_data]))
+    tr = trainer.get_trainer(train_data, eval_data, tokenizer=tokenizer)
     
     if return_trainer:
         return tr 
