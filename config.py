@@ -49,4 +49,4 @@ training_args = dict(
 
 
 # pipeline
-split_size = 0.8
+split_size = 0.2
